@@ -16,7 +16,7 @@
 
 ## APIs
 
-Base URL = '' #TODO:
+Base URL = 'https://my-fliplet-test-api.herokuapp.com/api/v1'
 
 `GET` /rss-to-json
 
