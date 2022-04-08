@@ -9,6 +9,7 @@ const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./api/shared/errorHandler');
+const apiVersions = require('./api/index');
 
 const app = express();
 
@@ -47,6 +48,9 @@ app.use(cookieParser());
 app.use(xss());
 
 app.use(compression());
+
+// ROUTES
+app.use('/api', apiVersions);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
