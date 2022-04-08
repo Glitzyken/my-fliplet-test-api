@@ -31,6 +31,6 @@ exports.convertRSStoJSON = catchAsync(async (req, res, next) => {
     res.status(200).json(result.data);
   } else {
     console.log('SENDING CACHED...🍫');
-    res.status(304).json(cachedBody);
+    res.status(200).json(cachedBody);
   }
 });
