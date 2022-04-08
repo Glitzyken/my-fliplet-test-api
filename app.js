@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const compression = require('compression');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./api/shared/errorHandler');
+
 const app = express();
 
 app.enable('trust proxy');
@@ -16,9 +19,9 @@ app.enable('trust proxy');
 app.use(cors());
 app.options('*', cors());
 
-// if (process.env.NODE_ENV === 'development') {
-app.use(morgan('dev'));
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // Set security HTTP headers
 app.use(helmet());
@@ -44,5 +47,11 @@ app.use(cookieParser());
 app.use(xss());
 
 app.use(compression());
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
