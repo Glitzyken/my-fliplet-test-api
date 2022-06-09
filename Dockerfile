@@ -1,4 +1,8 @@
-FROM node:ubuntu
-COPY . /server
-WORKDIR /server
-CMD node server.js
+FROM node:alpine
+WORKDIR /fliplet-rss
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+COPY . .
+EXPOSE 80
+CMD ["npm", "start"]
